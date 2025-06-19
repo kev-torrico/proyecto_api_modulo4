@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Status } from "../constants/index.js";
 
 const User = sequelize.define("users", {
   id: {
@@ -28,10 +29,10 @@ const User = sequelize.define("users", {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "ACTIVE",
+    defaultValue: Status.ACTIVE,
     validate: {
-      args: [["ACTIVE", "INACTIVE"]],
-      msg: "Status must be ACTIVE OR INACTIVE",
+      args: [[Status.ACTIVE, Status.INACTIVE]],
+      msg: `Status must be ${Status.ACTIVE} OR ${Status.INACTIVE}`,
     },
   },
 });
