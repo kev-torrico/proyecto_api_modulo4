@@ -8,6 +8,11 @@ const requiredEnv = (key) => {
 
 const config = {
   PORT: requiredEnv("PORT"),
+  DB_HOST: requiredEnv("DB_HOST"),
+  DB_USER: requiredEnv("DB_USER"),
+  DB_PASSWORD: requiredEnv("DB_PASSWORD"),
+  DB_DATABASE: requiredEnv("DB_DATABASE"),
+  DB_DIALECT: requiredEnv("DB_DIALECT"),
 };
 
 export default config;
