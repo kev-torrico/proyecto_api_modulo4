@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
-import config from "../config/env.js";
+import { config } from "../config/env.js";
 
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
   config.DB_DATABASE,
   config.DB_USER,
   config.DB_PASSWORD,
@@ -11,5 +11,3 @@ const sequelize = new Sequelize(
     logging: console.log(),
   }
 );
-
-export default sequelize;

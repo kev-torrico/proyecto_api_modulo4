@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { Status } from "../constants/index.js";
 
-const User = sequelize.define("users", {
+export const User = sequelize.define("users", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -36,5 +36,3 @@ const User = sequelize.define("users", {
     },
   },
 });
-
-export default User;
