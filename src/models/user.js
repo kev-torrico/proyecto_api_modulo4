@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { Status } from "../constants/index.js";
+import { Task } from "./task.js";
 
 export const User = sequelize.define("users", {
   id: {
@@ -31,8 +32,13 @@ export const User = sequelize.define("users", {
     allowNull: false,
     defaultValue: Status.ACTIVE,
     validate: {
-      args: [[Status.ACTIVE, Status.INACTIVE]],
-      msg: `Status must be ${Status.ACTIVE} OR ${Status.INACTIVE}`,
+      isIn: {
+        args: [[Status.ACTIVE, Status.INACTIVE]],
+        msg: `Status must be ${Status.ACTIVE} OR ${Status.INACTIVE}`,
+      },
     },
   },
 });
+
+User.hasMany(Task);
+Task.belongsTo(User);

@@ -10,9 +10,6 @@ async function main() {
   const port = config.PORT;
   app.listen(port);
   logger.info("Server running at port: " + port);
-  logger.error("This is an error");
-  logger.warn("This a warn message");
-  logger.fatal("This is a fatal message");
 }
 
 main();
