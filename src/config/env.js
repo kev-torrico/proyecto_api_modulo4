@@ -13,4 +13,6 @@ export const config = {
   DB_PASSWORD: requiredEnv("DB_PASSWORD"),
   DB_DATABASE: requiredEnv("DB_DATABASE"),
   DB_DIALECT: requiredEnv("DB_DIALECT"),
+  BCRYPT_SALT_ROUNDS: +requiredEnv("BCRYPT_SALT_ROUNDS"),
 };
+//con el+lo vuelve entero
