@@ -9,6 +9,15 @@ function validate(schema, target = "body") {
       abortEarly: false,
       stripUnknown: true,
     });
-    if (error)
+    if (error) {
+      return res.status(400).json({
+        msg: `Validation error on ${target}`,
+        errors: error.details.map((err) => err.message),
+      });
+    }
+    req[target] = value;
+    next();
   };
 }
+
+export default validate;
