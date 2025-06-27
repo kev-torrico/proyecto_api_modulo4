@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { config } from "../config/env.js";
+import logger from "../logs/logger.js";
 
 export const encriptar = async (texto) => {
   try {

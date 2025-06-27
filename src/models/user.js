@@ -13,6 +13,10 @@ export const User = sequelize.define("users", {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: {
+      args: true,
+      msg: "Username already exists",
+    },
     validate: {
       notNull: {
         msg: "Username is required",
@@ -24,7 +28,7 @@ export const User = sequelize.define("users", {
     allowNull: false,
     validate: {
       notNull: {
-        msg: "Passowrd is required",
+        msg: "Password is required",
       },
     },
   },
@@ -48,7 +52,6 @@ User.beforeCreate(async (user) => {
   try {
     user.password = await encriptar(user.password);
   } catch (error) {
-    logger.error(error.message);
-    throw new Error("Error al encriptar antes de crear");
+    next(error);
   }
 });
