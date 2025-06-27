@@ -14,5 +14,7 @@ export const config = {
   DB_DATABASE: requiredEnv("DB_DATABASE"),
   DB_DIALECT: requiredEnv("DB_DIALECT"),
   BCRYPT_SALT_ROUNDS: +requiredEnv("BCRYPT_SALT_ROUNDS"),
+  JWT_SECRET: requiredEnv("JWT_SECRET"),
+  JWT_EXPIRES_SECONDS: requiredEnv("JWT_EXPIRES_SECONDS"),
 };
 //con el+lo vuelve entero

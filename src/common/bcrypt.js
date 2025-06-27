@@ -15,7 +15,7 @@ export const encriptar = async (texto) => {
 
 export const comparar = async (texto, hash) => {
   try {
-    return await bcrypt.compare(texto.hash);
+    return await bcrypt.compare(texto, hash);
   } catch (error) {
     logger.error(error);
     throw new Error("Error al comparar contraseña");

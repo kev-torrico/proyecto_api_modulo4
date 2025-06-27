@@ -6,6 +6,7 @@ import {
   updateUserSchema,
   updateUserStatusSchema,
 } from "../validators/user.validate.js";
+import { authenticateToken } from "../middlewares/authenticate.js";
 
 const router = Router();
 
@@ -16,10 +17,15 @@ router
   .post(validate(createUserSchema, "body"), userController.createUser);
 router
   .route("/:id")
-  .get(userController.getUser)
-  .put(validate(updateUserSchema, "body"), userController.updateUser)
-  .delete(userController.deleteUser)
+  .get(authenticateToken, userController.getUser)
+  .put(
+    authenticateToken,
+    validate(updateUserSchema, "body"),
+    userController.updateUser
+  )
+  .delete(authenticateToken, userController.deleteUser)
   .patch(
+    authenticateToken,
     validate(updateUserStatusSchema, "body"),
     userController.activateInactivate
   );
