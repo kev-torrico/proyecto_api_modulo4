@@ -109,6 +109,30 @@ async function activateInactivate(req, res, next) {
   }
 }
 
+async function getTasks(req, res, next) {
+  const { id } = req.params;
+  try {
+    const user = await User.findOne({
+      attributes: ["username"],
+      include: [
+        {
+          model: Task,
+          attributes: ["name", "done"],
+          where: {
+            done: false,
+          },
+        },
+      ],
+      where: {
+        id,
+      },
+    });
+    return res.json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   getUsers,
   createUser,
@@ -116,4 +140,5 @@ export default {
   updateUser,
   deleteUser,
   activateInactivate,
+  getTasks,
 };
