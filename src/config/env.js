@@ -16,5 +16,6 @@ export const config = {
   BCRYPT_SALT_ROUNDS: +requiredEnv("BCRYPT_SALT_ROUNDS"),
   JWT_SECRET: requiredEnv("JWT_SECRET"),
   JWT_EXPIRES_SECONDS: requiredEnv("JWT_EXPIRES_SECONDS"),
+  DB_USE_SSL: requiredEnv("DB_USE_SSL") ?? false,
 };
 //con el+lo vuelve entero
