@@ -82,7 +82,7 @@ async function deleteUser(req, res, next) {
         id,
       },
     });
-    return res.status(404).json({ message: "User deleted" });
+    return res.status(204).json({ message: "User deleted" });
   } catch (error) {
     next(error);
   }
@@ -118,9 +118,6 @@ async function getTasks(req, res, next) {
         {
           model: Task,
           attributes: ["name", "done"],
-          where: {
-            done: false,
-          },
         },
       ],
       where: {
