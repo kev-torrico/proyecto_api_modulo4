@@ -107,7 +107,7 @@ async function deleteTask(req, res, next) {
       },
     });
     if (task === 0) res.status(404).json({ message: "Task not found" });
-    return res.json({ message: "Task deleted" });
+    return res.status(204);
   } catch (error) {
     next(error);
   }
