@@ -35,7 +35,7 @@ async function getUser(req, res, next) {
   const { id } = req.params;
   try {
     const user = await User.findOne({
-      attributes: ["username", "password", "status"],
+      attributes: ["username", "status"],
       where: {
         id,
       },
