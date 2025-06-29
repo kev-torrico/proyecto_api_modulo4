@@ -1,7 +1,10 @@
 import { User } from "../models/user.js";
 import { Task } from "../models/task.js";
 import { Status } from "../constants/index.js";
+import { OrderDir } from "../constants/index.js";
+import { OrderBy } from "../constants/index.js";
 import { encriptar } from "../common/bcrypt.js";
+import { Op } from "sequelize";
 
 async function getUsers(req, res, next) {
   try {
@@ -130,6 +133,66 @@ async function getTasks(req, res, next) {
   }
 }
 
+async function getPagination(req, res, next) {
+  let {
+    page = 1,
+    limit = 10,
+    search = "",
+    orderBy = "id",
+    orderDir = "DESC",
+  } = req.query;
+
+  page = parseInt(page);
+  limit = parseInt(limit);
+
+  if (isNaN(page) || isNaN(limit)) {
+    return res.status(400).json({ message: "Page and limit must be numbers" });
+  }
+
+  if (![5, 10, 15, 20].includes(limit)) {
+    return res.status(400).json({ message: "Limit must be 5, 10, 15 or 20" });
+  }
+  if (![OrderDir.ASC, OrderDir.DESC].includes(orderDir)) {
+    return res.status(400).json({
+      message: `Order direction must be ${OrderDir.ASC} or ${OrderDir.DESC}`,
+    });
+  }
+
+  if (![OrderBy.ID, OrderBy.USERNAME, OrderBy.STATUS].includes(orderBy)) {
+    return res.status(400).json({
+      message: `Order by must be ${OrderBy.ID}, ${OrderBy.USERNAME} or ${OrderBy.STATUS}`,
+    });
+  }
+
+  const offset = (page - 1) * limit;
+  try {
+    const where = search
+      ? {
+          username: {
+            [Op.iLike]: `%${search}%`,
+          },
+        }
+      : {};
+
+    const { count, rows } = await User.findAndCountAll({
+      where,
+      limit,
+      offset,
+      order: [[orderBy, orderDir]],
+    });
+
+    const totalPages = Math.ceil(count / limit);
+    return res.status(200).json({
+      total: count,
+      page,
+      pages: totalPages,
+      data: rows,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   getUsers,
   createUser,
@@ -138,4 +201,5 @@ export default {
   deleteUser,
   activateInactivate,
   getTasks,
+  getPagination,
 };

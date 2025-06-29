@@ -32,4 +32,6 @@ router
 
 router.get("/:id/tasks", authenticateToken, userController.getTasks);
 
+router.get("/list/pagination", userController.getPagination);
+
 export default router;
